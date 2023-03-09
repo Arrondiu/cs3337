@@ -5,7 +5,7 @@
 <title>Login</title>
 </head>
 <body>
-	<!-- Creates a form, gathers the data, and send data into Register.java doPost() -->
+	<!-- Creates a form, gathers the data, and send data into Login.java doPost() -->
 	<form action="Login" method="post">
 		<table>
 			<tr>
