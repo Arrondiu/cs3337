@@ -19,28 +19,36 @@ public class Login extends HttpServlet {
 		super();
 	}
 
-	// Goes to the Login.jsp page
+	// The doGet method gets information from the server
+	// In this method, it receives request from Login.jsp and forwards the data to doPost
+	// See /WEB-INF/Login.jsp for more information
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.getRequestDispatcher("/WEB-INF/Login.jsp").forward(request, response);
 	}
 
-	// Retrieves data from Login.jsp and uses the DbService to look in the database
-	// if there is the email and password
-	// If so, it forwards to Index.jsp
-	// If not, it sends error and sends back to Login.jsp
+	// After retrieving data from Login.jsp, it gets sent to DbService (Our MySQL database)
+	// See /webtest/DbService.java for more information
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// This is currently being used to see if there are no matching login. It would send the Failed message
 		PrintWriter out = response.getWriter();
+		// This retrieves the name "email" from Login.jsp
 		String email = request.getParameter("email");
+		// This retrieves the name "password" from Login.jsp
 		String password = request.getParameter("password");
-
+		
+		// This calls the method DbService
 		DbService dbService = new DbService();
+		// It looks at the email and password inputted into the login form and compares it to the database
 		if (dbService.loginUser(email, password)) {
+			// If it matches, it directs the user to the Index.jsp
 			response.sendRedirect("Index");
 		} else {
+			// If not, it prints out a page that says Failed
 			out.print("Failed");
-			// Create a window pop-up to say that the email/password is incorrect
+			// NOT FINISHED (This is what I want to do instead of saying a message)
+			// Create a window pop-up that says that the email/password is incorrect
 //			response.sendRedirect("Login");
 		}
 	}
